@@ -69,9 +69,9 @@ RUN git clone https://github.com/pothosware/SoapyBladeRF.git && \
     ldconfig
 
 # UHD drivers for USRP
-RUN add-apt-repository ppa:ettusresearch/uhd && \
-    apt update && apt -y install libuhd-dev uhd-host && \
-    uhd_images_downloader
+# RUN add-apt-repository ppa:ettusresearch/uhd && \
+#     apt update && apt -y install libuhd-dev uhd-host && \
+#     uhd_images_downloader
 
 # Get srsGUI, compile and install
 RUN git clone https://github.com/srsran/srsGUI && \
