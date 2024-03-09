@@ -38,11 +38,11 @@ RF simulated setups:
 # Build docker images for open5gs EPC/5GC components
 git clone https://github.com/herlesupreeth/docker_open5gs
 cd docker_open5gs/base
-docker build --no-cache --force-rm -t docker_open5gs .
+sudo docker build --no-cache --force-rm -t docker_open5gs .
 
 # Build docker images for kamailio IMS components
 cd ../ims_base
-docker build --no-cache --force-rm -t docker_kamailio .
+sudo docker build --no-cache --force-rm -t docker_kamailio .
 
 # Build docker images for srsRAN_4G eNB + srsUE (4G+5G)
 cd ../srslte
