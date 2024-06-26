@@ -50,4 +50,4 @@ RUN cd /usr/local/src/kamailio && \
 	ldconfig
 
 COPY kamailio_init.sh /
-CMD /kamailio_init.sh
+CMD ["/kamailio_init.sh"]

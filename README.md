@@ -48,10 +48,6 @@ sudo docker build --no-cache --force-rm -t docker_kamailio .
 cd ../srslte
 docker build --no-cache --force-rm -t docker_srslte .
 
-# Build docker images for srsRAN_Project gNB
-cd ../srsran
-docker build --no-cache --force-rm -t docker_srsran .
-
 # Build docker images for UERANSIM (gNB + UE)
 cd ../ueransim
 docker build --no-cache --force-rm -t docker_ueransim .
@@ -68,10 +64,7 @@ sudo sysctl -w net.ipv4.ip_forward=1
 sudo cpupower frequency-set -g performance
 
 # For 4G deployment only
-docker compose -f 4g-volte-deploy.yaml build
-
-# For 5G deployment only
-docker compose -f sa-deploy.yaml build
+sudo docker compose -f 4g-volte-deploy.yaml build
 ```
 
 ## Network and deployment configuration
@@ -150,100 +143,20 @@ with
 	network_mode: host
 ```
 
-#### 5G SA deployment
-
-###### On the host running the 5GC
-
-Edit only the following parameters in **.env** as per your setup
-```
-MCC
-MNC
-DOCKER_HOST_IP --> This is the IP address of the host running 5GC
-UPF_ADVERTISE_IP --> Change this to value of DOCKER_HOST_IP
-UE_IPV4_INTERNET --> Change this to your desired (Not conflicted) UE network ip range for internet APN
-UE_IPV4_IMS --> Change this to your desired (Not conflicted) UE network ip range for ims APN
-```
-
-Under **amf** section in docker compose file (**sa-deploy.yaml**), uncomment the following part
-```
-...
-    # ports:
-    #   - "38412:38412/sctp"
-...
-```
-
-Then, uncomment the following part under **upf** section
-```
-...
-    # ports:
-    #   - "2152:2152/udp"
-...
-```
-
-###### On the host running the gNB
-
-Edit only the following parameters in **.env** as per your setup
-```
-MCC
-MNC
-DOCKER_HOST_IP --> This is the IP address of the host running gNB
-AMF_IP --> Change this to IP address of host running 5GC
-SRS_GNB_IP --> Change this to the IP address of the host running gNB
-```
-
-Replace the following part in the docker compose file (**srsgnb.yaml**)
-```
-    networks:
-      default:
-        ipv4_address: ${SRS_GNB_IP}
-networks:
-  default:
-    external:
-      name: docker_open5gs_default
-```
-with 
-```
-	network_mode: host
-```
-
-## Network Deployment
-
 ###### 4G deployment
 
 ```
 # 4G Core Network + IMS + SMS over SGs
-docker compose -f 4g-volte-deploy.yaml up
+sudo docker compose -f 4g-volte-deploy.yaml up
 
 # srsRAN eNB using SDR (OTA)
-docker compose -f srsenb.yaml up -d && docker container attach srsenb
+sudo docker compose -f srsenb.yaml up -d && docker container attach srsenb
 
 # srsRAN ZMQ eNB (RF simulated)
 docker compose -f srsenb_zmq.yaml up -d && docker container attach srsenb_zmq
 
 # srsRAN ZMQ 4G UE (RF simulated)
 docker compose -f srsue_zmq.yaml up -d && docker container attach srsue_zmq
-```
-
-###### 5G SA deployment
-
-```
-# 5G Core Network
-docker compose -f sa-deploy.yaml up
-
-# srsRAN gNB using SDR (OTA)
-docker compose -f srsgnb.yaml up -d && docker container attach srsgnb
-
-# srsRAN ZMQ gNB (RF simulated)
-docker compose -f srsgnb_zmq.yaml up -d && docker container attach srsgnb_zmq
-
-# srsRAN ZMQ 5G UE (RF simulated)
-docker compose -f srsue_5g_zmq.yaml up -d && docker container attach srsue_5g_zmq
-
-# UERANSIM gNB (RF simulated)
-docker compose -f nr-gnb.yaml up -d && docker container attach nr_gnb
-
-# UERANSIM NR-UE (RF simulated)
-docker compose -f nr-ue.yaml up -d && docker container attach nr_ue
 ```
 
 ## Provisioning of SIM information

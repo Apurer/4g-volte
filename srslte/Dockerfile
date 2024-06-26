@@ -93,6 +93,7 @@ RUN cd srsRAN_4G/build && srsran_install_configs.sh service
 
 ENV UHD_IMAGES_DIR=/usr/share/uhd/images/
 
-CMD cd /mnt/srslte && /mnt/srslte/srslte_init.sh
+WORKDIR /mnt/srslte
+CMD ["./srslte_init.sh"]
 
 #gdb /usr/local/bin/srsenb
