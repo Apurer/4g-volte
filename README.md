@@ -76,8 +76,8 @@ Password : 1423
 
 Korzystając z interfejsu Web UI, dodaj abonenta (subscriber)
 
-![Zrzut ekranu subskrybenta nr 1](asset/img/konfiguracja-abonenta-w-webgui-nr1-6.png "Zrzut ekranu subskrybenta nr 1")
-![Zrzut ekranu subskrybenta nr 2](asset/img/konfiguracja-abonenta-w-webgui-nr2-6.png "Zrzut ekranu subskrybenta nr 2")
+![Zrzut ekranu subskrybenta nr 1](https://github.com/Apurer/4g-volte/blob/master/assets/img/konfiguracja-abonenta-w-webgui-nr1-6.png "Zrzut ekranu subskrybenta nr 1")
+![Zrzut ekranu subskrybenta nr 2](https://github.com/Apurer/4g-volte/blob/master/assets/img/konfiguracja-abonenta-w-webgui-nr2-6.png "Zrzut ekranu subskrybenta nr 2")
 
 
 ### Provisionowanie IMSI i MSISDN z OsmoHLR jak poniżej:
