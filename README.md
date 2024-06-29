@@ -14,21 +14,6 @@ Konfiguracje Over-The-Air:
 	* [docker-ce](https://docs.docker.com/install/linux/docker-ce/ubuntu) - wersja 22.0.5 lub wyższa
 	* [docker compose](https://docs.docker.com/compose) - wersja 2.14 lub wyższa
 
-
-#### Budowanie obrazów Docker dla dodatkowych komponentów
-
-```
-cd ..
-set -a
-source .env
-sudo ufw disable
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo cpupower frequency-set -g performance
-
-# Tylko dla wdrożenia 4G
-sudo docker compose -f 4g-volte-deploy.yaml build
-```
-
 #### Nadawanie uprawnień na skryptach shell
 
 ```
@@ -39,7 +24,37 @@ chmod +x configure_host.sh
 chmod +x find_veth_docker.sh
 ```
 
-###### Wdrożenie 4G
+#### Konfiguracja Dockera. Uruchom ten skrypt, aby skonfigurować środowisko Docker na systemie. 
+
+```
+./setup-docker.sh
+```
+
+#### Instalacja Narzędzi Docker. Ten skrypt zainstaluje dodatkowe narzędzia potrzebne do zarządzania Dockerem i jego kontenerami.
+
+```
+./install-docker-tools.sh
+```
+
+#### Instalacja narzędzi BladeRF. Użyj tego skryptu, aby zainstalować narzędzia BladeRF, które są wymagane do operacji związanych z BladeRF.
+
+```
+./install_bladerf.sh
+```
+
+#### W celu weryfikacji poprawności instalacji narzędzi BladeRF, podłącz urządzenie BladeRF do komputera i uruchom poniższe polecenie:
+
+```
+bladeRF-cli -e 'info' -v verbose
+```
+
+#### Konfiguracja hosta:
+
+```
+./configure_host.sh
+```
+
+#### Wdrożenie 4G
 
 ```
 # 4G Core Network + IMS + SMS over SGs
