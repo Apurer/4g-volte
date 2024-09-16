@@ -1,0 +1,21 @@
+services:
+  srsue:
+    image: ghcr.io/apurer/srseu:1.0  # Replace with your actual srsUE image name
+    container_name: srsue
+    stdin_open: true
+    tty: true
+    privileged: true
+    devices:
+      - "/dev/bus"
+    volumes:
+      - /dev/serial:/dev/serial:ro
+      - /dev/bus/usb:/dev/bus/usb:ro
+      - ./srsue:/mnt/srsue  # Updated to use srsue
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      - COMPONENT_NAME=ue
+      # Uncomment and set BLADERF_SERIAL if you have multiple bladeRF devices
+      # - BLADERF_SERIAL=your-bladerf-serial-number
